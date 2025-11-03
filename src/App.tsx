@@ -1,0 +1,41 @@
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { WaterBodyProvider } from "@/contexts/WaterBodyContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import Index from "./pages/Index";
+import WaterBodyList from "./pages/WaterBodyList";
+import WaterBodyDetail from "./pages/WaterBodyDetail";
+import AddWaterBody from "./pages/AddWaterBody";
+import Analytics from "./pages/Analytics";
+import Auth from "./pages/Auth";
+import NotFound from "./pages/NotFound";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <WaterBodyProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/list" element={<ProtectedRoute><WaterBodyList /></ProtectedRoute>} />
+            <Route path="/water-body/:id" element={<ProtectedRoute><WaterBodyDetail /></ProtectedRoute>} />
+            <Route path="/add" element={<ProtectedRoute><AddWaterBody /></ProtectedRoute>} />
+            <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </WaterBodyProvider>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;
