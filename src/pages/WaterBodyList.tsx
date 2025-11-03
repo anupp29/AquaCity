@@ -4,16 +4,21 @@ import { WaterBodyCard } from '@/components/WaterBodyCard';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
+import { Search, Map, Grid } from 'lucide-react';
 import { MAHARASHTRA_DISTRICTS } from '@/data/maharashtraData';
 import { WaterBodyType, HealthStatus } from '@/types/waterBody';
+import { WaterBodyMap } from '@/components/WaterBodyMap';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const WaterBodyList = () => {
   const { waterBodies } = useWaterBodies();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterDistrict, setFilterDistrict] = useState<string>('all');
   const [filterType, setFilterType] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
 
   const filteredWaterBodies = useMemo(() => {
     return waterBodies.filter((wb) => {
@@ -32,9 +37,31 @@ const WaterBodyList = () => {
   return (
     <Layout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Water Bodies</h1>
-          <p className="text-muted-foreground">Browse and filter all water bodies across Maharashtra</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Water Bodies</h1>
+            <p className="text-muted-foreground">Browse and filter all water bodies across Maharashtra</p>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant={viewMode === 'grid' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setViewMode('grid')}
+              className="gap-2"
+            >
+              <Grid className="h-4 w-4" />
+              Grid
+            </Button>
+            <Button
+              variant={viewMode === 'map' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setViewMode('map')}
+              className="gap-2"
+            >
+              <Map className="h-4 w-4" />
+              Map
+            </Button>
+          </div>
         </div>
 
         {/* Filters */}
@@ -100,6 +127,14 @@ const WaterBodyList = () => {
           {filteredWaterBodies.length === 0 ? (
             <div className="text-center py-12 bg-card rounded-xl shadow-card">
               <p className="text-muted-foreground">No water bodies found matching your filters</p>
+            </div>
+          ) : viewMode === 'map' ? (
+            <div className="bg-card p-6 rounded-xl shadow-card">
+              <WaterBodyMap 
+                waterBodies={filteredWaterBodies}
+                height="600px"
+                onMarkerClick={(id) => navigate(`/water-body/${id}`)}
+              />
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

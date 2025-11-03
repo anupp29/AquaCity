@@ -7,6 +7,7 @@ import { Droplets, AlertTriangle, TrendingUp, Database, Plus, BarChart3 } from '
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { toast } from 'sonner';
+import { WaterBodyMap } from './WaterBodyMap';
 
 const STATUS_COLORS = {
   excellent: 'hsl(var(--status-excellent))',
@@ -172,6 +173,16 @@ export const Dashboard = () => {
             <Bar dataKey="count" fill="hsl(var(--accent))" radius={[0, 8, 8, 0]} />
           </BarChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* Map View */}
+      <div className="bg-card p-6 rounded-xl shadow-card">
+        <h2 className="text-xl font-semibold mb-6 text-foreground">Water Bodies Map</h2>
+        <WaterBodyMap 
+          waterBodies={waterBodies} 
+          height="500px"
+          onMarkerClick={(id) => navigate(`/water-body/${id}`)}
+        />
       </div>
 
       {/* Quick Actions */}

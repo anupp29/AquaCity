@@ -57,14 +57,14 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const fetchWaterBodies = async () => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('water_bodies')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      const mapped = data?.map(wb => ({
+      const mapped = (data as any)?.map((wb: any) => ({
         id: wb.id,
         name: wb.name,
         type: wb.type as WaterBody['type'],
@@ -104,7 +104,7 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const healthStatus = getHealthStatus(healthScore);
 
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('water_bodies')
         .insert([{
           user_id: user.id,
@@ -156,7 +156,7 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         dbUpdates.health_status = getHealthStatus(dbUpdates.health_score);
       }
 
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('water_bodies')
         .update(dbUpdates)
         .eq('id', id);
@@ -178,7 +178,7 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
 
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('water_bodies')
         .delete()
         .eq('id', id);
