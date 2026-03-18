@@ -74,8 +74,8 @@ const AddWaterBody = () => {
         </Button>
 
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Add New Water Body</h1>
-          <p className="text-muted-foreground">Enter details about the water body and its health parameters</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Add Water Body Record</h1>
+          <p className="text-muted-foreground">Submit a field record that supports SDG 6 clean water monitoring.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
