@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useState, useMemo } from 'react';
 import { Search, Map, Grid } from 'lucide-react';
 import { MAHARASHTRA_DISTRICTS } from '@/data/maharashtraData';
-import { WaterBodyType, HealthStatus } from '@/types/waterBody';
+import { WATER_BODY_TYPES, WATER_BODY_TYPE_LABELS } from '@/types/waterBody';
 import { WaterBodyMap } from '@/components/WaterBodyMap';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';

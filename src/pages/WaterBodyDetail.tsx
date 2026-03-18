@@ -26,7 +26,7 @@ import { useState } from 'react';
 const WaterBodyDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getWaterBodyById, deleteWaterBody } = useWaterBodies();
+  const { getWaterBodyById, deleteWaterBody, user } = useWaterBodies();
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   
   const waterBody = getWaterBodyById(id!);

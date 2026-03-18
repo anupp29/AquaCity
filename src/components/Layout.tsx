@@ -61,8 +61,8 @@ export const Layout = ({ children }: LayoutProps) => {
                       <Droplets className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="font-bold text-foreground">Water Health</h2>
-                      <p className="text-xs text-muted-foreground">Maharashtra</p>
+                      <h2 className="font-bold text-foreground">SDG 6 Water Watch</h2>
+                      <p className="text-xs text-muted-foreground">Clean Water • Maharashtra</p>
                     </div>
                   </div>
                   <NavLinks />
@@ -75,8 +75,8 @@ export const Layout = ({ children }: LayoutProps) => {
                 <Droplets className="h-6 w-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="font-bold text-lg text-foreground">Water Body Health Reporter</h1>
-                <p className="text-xs text-muted-foreground">Maharashtra Edition</p>
+                <h1 className="font-bold text-lg text-foreground">SDG 6 Water Watch</h1>
+                <p className="text-xs text-muted-foreground">Clean Water • Maharashtra</p>
               </div>
             </Link>
           </div>

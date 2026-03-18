@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card } from '@/components/ui/card';
 import { MAHARASHTRA_DISTRICTS } from '@/data/maharashtraData';
-import { WaterBodyType, WaterBody } from '@/types/waterBody';
+import { WaterBodyType, WaterBody, WATER_BODY_TYPES, WATER_BODY_TYPE_LABELS } from '@/types/waterBody';
 import { ArrowLeft, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
