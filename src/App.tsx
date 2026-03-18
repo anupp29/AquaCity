@@ -24,11 +24,11 @@ const App = () => (
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
             <Route path="/auth" element={<Auth />} />
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-            <Route path="/list" element={<ProtectedRoute><WaterBodyList /></ProtectedRoute>} />
-            <Route path="/water-body/:id" element={<ProtectedRoute><WaterBodyDetail /></ProtectedRoute>} />
+            <Route path="/" element={<Index />} />
+            <Route path="/list" element={<WaterBodyList />} />
+            <Route path="/water-body/:id" element={<WaterBodyDetail />} />
             <Route path="/add" element={<ProtectedRoute><AddWaterBody /></ProtectedRoute>} />
-            <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+            <Route path="/analytics" element={<Analytics />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

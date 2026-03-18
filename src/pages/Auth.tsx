@@ -9,6 +9,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Droplets } from 'lucide-react';
 
+const getFriendlyAuthError = (error: unknown) => {
+  if (error instanceof Error && error.message === 'Failed to fetch') {
+    return 'Authentication is temporarily unreachable. You can still explore the public SDG 6 dashboard and try signing in again in a moment.';
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return 'Something went wrong. Please try again.';
+};
+
 const Auth = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -17,34 +29,36 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const fullName = formData.get('fullName') as string;
+    try {
+      const formData = new FormData(e.currentTarget);
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
+      const fullName = formData.get('fullName') as string;
 
-    if (!email || !password) {
-      toast.error('Please fill in all fields');
-      setLoading(false);
-      return;
-    }
+      if (!email || !password) {
+        toast.error('Please fill in all fields');
+        return;
+      }
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+          emailRedirectTo: `${window.location.origin}/`,
         },
-        emailRedirectTo: `${window.location.origin}/`,
-      },
-    });
+      });
 
-    setLoading(false);
+      if (error) throw error;
 
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success('Account created! You can now sign in.');
+      toast.success('Account created. Please confirm your email before signing in.');
+    } catch (error) {
+      toast.error(getFriendlyAuthError(error));
+      console.error('Sign up error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,28 +66,30 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    try {
+      const formData = new FormData(e.currentTarget);
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
 
-    if (!email || !password) {
-      toast.error('Please fill in all fields');
-      setLoading(false);
-      return;
-    }
+      if (!email || !password) {
+        toast.error('Please fill in all fields');
+        return;
+      }
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    setLoading(false);
+      if (error) throw error;
 
-    if (error) {
-      toast.error(error.message);
-    } else {
       toast.success('Signed in successfully!');
-      navigate('/');
+      navigate('/add');
+    } catch (error) {
+      toast.error(getFriendlyAuthError(error));
+      console.error('Sign in error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,11 +99,11 @@ const Auth = () => {
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Droplets className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold">Water Body Monitor</h1>
+            <h1 className="text-2xl font-bold">SDG 6 Water Watch</h1>
           </div>
-          <CardTitle className="text-2xl">Welcome</CardTitle>
+          <CardTitle className="text-2xl">Clean Water Monitoring</CardTitle>
           <CardDescription>
-            Sign in to your account or create a new one
+            Browse public water data or sign in to submit and manage monitoring records.
           </CardDescription>
         </CardHeader>
         <CardContent>

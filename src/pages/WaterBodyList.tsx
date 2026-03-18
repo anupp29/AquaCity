@@ -94,12 +94,11 @@ const WaterBodyList = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="river">River</SelectItem>
-              <SelectItem value="lake">Lake</SelectItem>
-              <SelectItem value="pond">Pond</SelectItem>
-              <SelectItem value="reservoir">Reservoir</SelectItem>
-              <SelectItem value="wetland">Wetland</SelectItem>
-              <SelectItem value="stream">Stream</SelectItem>
+              {WATER_BODY_TYPES.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {WATER_BODY_TYPE_LABELS[type]}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
 

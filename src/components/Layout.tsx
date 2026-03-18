@@ -113,7 +113,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <footer className="border-t border-border bg-background/50 backdrop-blur">
         <div className="container py-6">
           <p className="text-center text-sm text-muted-foreground">
-            Maharashtra Water Body Health Reporter - Monitoring water quality for a healthier tomorrow
+            Supporting UN SDG 6 with transparent water quality monitoring across Maharashtra.
           </p>
         </div>
       </footer>
