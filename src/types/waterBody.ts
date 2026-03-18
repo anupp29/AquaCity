@@ -1,4 +1,14 @@
-export type WaterBodyType = 'river' | 'lake' | 'pond' | 'reservoir' | 'wetland' | 'stream' | 'well';
+export const WATER_BODY_TYPES = ['river', 'lake', 'pond', 'reservoir', 'well'] as const;
+
+export type WaterBodyType = (typeof WATER_BODY_TYPES)[number];
+
+export const WATER_BODY_TYPE_LABELS: Record<WaterBodyType, string> = {
+  river: 'River',
+  lake: 'Lake',
+  pond: 'Pond',
+  reservoir: 'Reservoir',
+  well: 'Well',
+};
 
 export type HealthStatus = 'excellent' | 'good' | 'fair' | 'poor' | 'critical';
 

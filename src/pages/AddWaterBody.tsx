@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card } from '@/components/ui/card';
 import { MAHARASHTRA_DISTRICTS } from '@/data/maharashtraData';
-import { WaterBodyType, WaterBody } from '@/types/waterBody';
+import { WaterBodyType, WaterBody, WATER_BODY_TYPES, WATER_BODY_TYPE_LABELS } from '@/types/waterBody';
 import { ArrowLeft, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -74,8 +74,8 @@ const AddWaterBody = () => {
         </Button>
 
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Add New Water Body</h1>
-          <p className="text-muted-foreground">Enter details about the water body and its health parameters</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Add Water Body Record</h1>
+          <p className="text-muted-foreground">Submit a field record that supports SDG 6 clean water monitoring.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -103,12 +103,11 @@ const AddWaterBody = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="river">River</SelectItem>
-                    <SelectItem value="lake">Lake</SelectItem>
-                    <SelectItem value="pond">Pond</SelectItem>
-                    <SelectItem value="reservoir">Reservoir</SelectItem>
-                    <SelectItem value="wetland">Wetland</SelectItem>
-                    <SelectItem value="stream">Stream</SelectItem>
+                    {WATER_BODY_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {WATER_BODY_TYPE_LABELS[type]}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

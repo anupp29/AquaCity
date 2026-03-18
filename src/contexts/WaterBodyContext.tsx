@@ -24,32 +24,17 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Initialize auth and fetch water bodies
   useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          setTimeout(() => {
-            fetchWaterBodies();
-          }, 0);
-        } else {
-          setWaterBodies([]);
-          setLoading(false);
-        }
-      }
-    );
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+      setTimeout(() => {
+        fetchWaterBodies();
+      }, 0);
+    });
 
-    // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchWaterBodies();
-      } else {
-        setLoading(false);
-      }
+      fetchWaterBodies();
     });
 
     return () => subscription.unsubscribe();
@@ -79,7 +64,7 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         photos: [],
         observations: wb.notes || undefined,
         pollutionSources: [],
-        reportedBy: { name: '', organization: '', contact: '' },
+        reportedBy: { name: '', organization: 'Community Monitoring', contact: '' },
         history: [],
         createdAt: wb.created_at,
         updatedAt: wb.updated_at,
@@ -104,7 +89,7 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const healthStatus = getHealthStatus(healthScore);
 
     try {
-      const { data, error } = await (supabase as any)
+      const { error } = await (supabase as any)
         .from('water_bodies')
         .insert([{
           user_id: user.id,
@@ -118,9 +103,7 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           health_status: healthStatus,
           images: waterBody.images || [],
           notes: waterBody.notes || waterBody.observations || null,
-        }])
-        .select()
-        .single();
+        }]);
 
       if (error) throw error;
 
@@ -198,13 +181,18 @@ export const WaterBodyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
     setUser(null);
-    setWaterBodies([]);
+    await fetchWaterBodies();
     toast.success('Signed out successfully');
   };
 
-  // Calculate dashboard stats
   const stats: DashboardStats = React.useMemo(() => {
     const totalWaterBodies = waterBodies.length;
     const averageHealthScore = waterBodies.length > 0

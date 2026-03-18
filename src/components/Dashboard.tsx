@@ -60,8 +60,8 @@ export const Dashboard = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Water Body Health Dashboard</h1>
-          <p className="text-muted-foreground">Monitor and analyze water quality across Maharashtra</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">SDG 6 Water Stewardship Dashboard</h1>
+          <p className="text-muted-foreground">Track clean water indicators and restoration priorities across Maharashtra</p>
         </div>
         <div className="flex gap-3">
           <Button onClick={() => navigate('/analytics')} variant="outline" className="gap-2">

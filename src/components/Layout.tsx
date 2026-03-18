@@ -61,8 +61,8 @@ export const Layout = ({ children }: LayoutProps) => {
                       <Droplets className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="font-bold text-foreground">Water Health</h2>
-                      <p className="text-xs text-muted-foreground">Maharashtra</p>
+                      <h2 className="font-bold text-foreground">SDG 6 Water Watch</h2>
+                      <p className="text-xs text-muted-foreground">Clean Water • Maharashtra</p>
                     </div>
                   </div>
                   <NavLinks />
@@ -75,8 +75,8 @@ export const Layout = ({ children }: LayoutProps) => {
                 <Droplets className="h-6 w-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="font-bold text-lg text-foreground">Water Body Health Reporter</h1>
-                <p className="text-xs text-muted-foreground">Maharashtra Edition</p>
+                <h1 className="font-bold text-lg text-foreground">SDG 6 Water Watch</h1>
+                <p className="text-xs text-muted-foreground">Clean Water • Maharashtra</p>
               </div>
             </Link>
           </div>
@@ -113,7 +113,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <footer className="border-t border-border bg-background/50 backdrop-blur">
         <div className="container py-6">
           <p className="text-center text-sm text-muted-foreground">
-            Maharashtra Water Body Health Reporter - Monitoring water quality for a healthier tomorrow
+            Supporting UN SDG 6 with transparent water quality monitoring across Maharashtra.
           </p>
         </div>
       </footer>

@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useState, useMemo } from 'react';
 import { Search, Map, Grid } from 'lucide-react';
 import { MAHARASHTRA_DISTRICTS } from '@/data/maharashtraData';
-import { WaterBodyType, HealthStatus } from '@/types/waterBody';
+import { WATER_BODY_TYPES, WATER_BODY_TYPE_LABELS } from '@/types/waterBody';
 import { WaterBodyMap } from '@/components/WaterBodyMap';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -39,8 +39,8 @@ const WaterBodyList = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">Water Bodies</h1>
-            <p className="text-muted-foreground">Browse and filter all water bodies across Maharashtra</p>
+              <h1 className="text-3xl font-bold text-foreground mb-2">Water Bodies</h1>
+              <p className="text-muted-foreground">Browse public SDG 6 monitoring records across Maharashtra</p>
           </div>
           <div className="flex gap-2">
             <Button
@@ -94,12 +94,11 @@ const WaterBodyList = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="river">River</SelectItem>
-              <SelectItem value="lake">Lake</SelectItem>
-              <SelectItem value="pond">Pond</SelectItem>
-              <SelectItem value="reservoir">Reservoir</SelectItem>
-              <SelectItem value="wetland">Wetland</SelectItem>
-              <SelectItem value="stream">Stream</SelectItem>
+              {WATER_BODY_TYPES.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {WATER_BODY_TYPE_LABELS[type]}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
 
