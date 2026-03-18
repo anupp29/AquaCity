@@ -39,8 +39,8 @@ const WaterBodyList = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">Water Bodies</h1>
-            <p className="text-muted-foreground">Browse and filter all water bodies across Maharashtra</p>
+              <h1 className="text-3xl font-bold text-foreground mb-2">Water Bodies</h1>
+              <p className="text-muted-foreground">Browse public SDG 6 monitoring records across Maharashtra</p>
           </div>
           <div className="flex gap-2">
             <Button
