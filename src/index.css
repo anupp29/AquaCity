@@ -2,124 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* Water-themed color palette */
-    --background: 210 40% 98%;
-    --foreground: 210 20% 15%;
+    /* AquaCity SDG 11 — Teal / Amber civic palette */
+    --background: 192 20% 97%;
+    --foreground: 200 25% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 20% 15%;
+    --card-foreground: 200 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 20% 15%;
+    --popover-foreground: 200 25% 12%;
 
-    /* Primary: Deep ocean blue */
-    --primary: 205 87% 29%;
+    /* Primary: Deep civic teal */
+    --primary: 192 82% 28%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Aqua teal */
-    --secondary: 180 25% 94%;
-    --secondary-foreground: 205 87% 29%;
+    /* Secondary: Warm sand */
+    --secondary: 45 30% 94%;
+    --secondary-foreground: 192 82% 28%;
 
-    --muted: 185 15% 92%;
-    --muted-foreground: 210 15% 45%;
+    --muted: 200 12% 92%;
+    --muted-foreground: 200 10% 45%;
 
-    /* Accent: Fresh water green */
-    --accent: 168 76% 36%;
+    /* Accent: SDG amber-gold */
+    --accent: 38 92% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 185 20% 88%;
-    --input: 185 20% 88%;
-    --ring: 205 87% 29%;
+    --border: 200 15% 88%;
+    --input: 200 15% 88%;
+    --ring: 192 82% 28%;
 
     --radius: 0.75rem;
 
     /* Health status colors */
-    --status-excellent: 145 80% 42%;
-    --status-good: 200 90% 50%;
-    --status-fair: 45 93% 47%;
-    --status-poor: 25 95% 53%;
+    --status-excellent: 152 69% 38%;
+    --status-good: 198 80% 46%;
+    --status-fair: 43 96% 50%;
+    --status-poor: 24 95% 53%;
     --status-critical: 0 84% 60%;
 
-    /* Water gradients */
-    --gradient-water: linear-gradient(135deg, hsl(200 90% 50%) 0%, hsl(168 76% 36%) 100%);
-    --gradient-ocean: linear-gradient(180deg, hsl(205 87% 29%) 0%, hsl(205 87% 20%) 100%);
-    --gradient-mist: linear-gradient(180deg, hsl(210 40% 98%) 0%, hsl(185 25% 94%) 100%);
+    /* Gradients */
+    --gradient-water: linear-gradient(135deg, hsl(192 82% 28%) 0%, hsl(164 70% 32%) 100%);
+    --gradient-ocean: linear-gradient(180deg, hsl(192 82% 28%) 0%, hsl(200 70% 20%) 100%);
+    --gradient-mist: linear-gradient(180deg, hsl(192 20% 97%) 0%, hsl(200 18% 94%) 100%);
+    --gradient-sdg: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(28 90% 48%) 100%);
 
-    /* Shadows */
-    --shadow-card: 0 2px 8px hsl(205 20% 20% / 0.08);
-    --shadow-elevated: 0 8px 24px hsl(205 20% 20% / 0.12);
+    --shadow-card: 0 1px 3px hsl(200 20% 20% / 0.06), 0 1px 2px hsl(200 20% 20% / 0.04);
+    --shadow-elevated: 0 10px 25px hsl(200 20% 20% / 0.08), 0 4px 10px hsl(200 20% 20% / 0.04);
 
-    --sidebar-background: 210 30% 96%;
-    --sidebar-foreground: 210 20% 15%;
-    --sidebar-primary: 205 87% 29%;
+    --sidebar-background: 192 15% 96%;
+    --sidebar-foreground: 200 25% 12%;
+    --sidebar-primary: 192 82% 28%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 185 25% 94%;
-    --sidebar-accent-foreground: 205 87% 29%;
-    --sidebar-border: 185 20% 88%;
-    --sidebar-ring: 205 87% 29%;
+    --sidebar-accent: 45 30% 94%;
+    --sidebar-accent-foreground: 192 82% 28%;
+    --sidebar-border: 200 15% 88%;
+    --sidebar-ring: 192 82% 28%;
   }
 
   .dark {
-    --background: 210 30% 8%;
-    --foreground: 210 20% 92%;
+    --background: 200 25% 7%;
+    --foreground: 200 15% 92%;
 
-    --card: 210 25% 12%;
-    --card-foreground: 210 20% 92%;
+    --card: 200 22% 10%;
+    --card-foreground: 200 15% 92%;
 
-    --popover: 210 25% 12%;
-    --popover-foreground: 210 20% 92%;
+    --popover: 200 22% 10%;
+    --popover-foreground: 200 15% 92%;
 
-    --primary: 200 90% 50%;
-    --primary-foreground: 210 30% 8%;
+    --primary: 192 75% 45%;
+    --primary-foreground: 200 25% 7%;
 
-    --secondary: 210 25% 16%;
-    --secondary-foreground: 210 20% 92%;
+    --secondary: 200 22% 14%;
+    --secondary-foreground: 200 15% 92%;
 
-    --muted: 210 25% 16%;
-    --muted-foreground: 210 15% 60%;
+    --muted: 200 22% 14%;
+    --muted-foreground: 200 10% 58%;
 
-    --accent: 168 65% 42%;
+    --accent: 38 85% 52%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 25% 20%;
-    --input: 210 25% 20%;
-    --ring: 200 90% 50%;
+    --border: 200 22% 18%;
+    --input: 200 22% 18%;
+    --ring: 192 75% 45%;
 
-    /* Health status colors (adjusted for dark mode) */
-    --status-excellent: 145 70% 45%;
-    --status-good: 200 80% 55%;
-    --status-fair: 45 85% 52%;
-    --status-poor: 25 90% 58%;
-    --status-critical: 0 80% 65%;
+    --status-excellent: 152 60% 42%;
+    --status-good: 198 70% 50%;
+    --status-fair: 43 88% 54%;
+    --status-poor: 24 88% 56%;
+    --status-critical: 0 80% 62%;
 
-    /* Dark mode gradients */
-    --gradient-water: linear-gradient(135deg, hsl(200 80% 40%) 0%, hsl(168 65% 35%) 100%);
-    --gradient-ocean: linear-gradient(180deg, hsl(205 70% 25%) 0%, hsl(205 70% 15%) 100%);
-    --gradient-mist: linear-gradient(180deg, hsl(210 25% 12%) 0%, hsl(210 25% 16%) 100%);
+    --gradient-water: linear-gradient(135deg, hsl(192 70% 35%) 0%, hsl(164 60% 30%) 100%);
+    --gradient-ocean: linear-gradient(180deg, hsl(200 60% 22%) 0%, hsl(200 60% 14%) 100%);
+    --gradient-mist: linear-gradient(180deg, hsl(200 22% 10%) 0%, hsl(200 22% 14%) 100%);
+    --gradient-sdg: linear-gradient(135deg, hsl(38 85% 45%) 0%, hsl(28 80% 42%) 100%);
 
-    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
-    --shadow-elevated: 0 8px 24px hsl(0 0% 0% / 0.5);
+    --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.25);
+    --shadow-elevated: 0 10px 25px hsl(0 0% 0% / 0.4);
 
-    --sidebar-background: 210 30% 10%;
-    --sidebar-foreground: 210 20% 92%;
-    --sidebar-primary: 200 90% 50%;
-    --sidebar-primary-foreground: 210 30% 8%;
-    --sidebar-accent: 210 25% 16%;
-    --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 210 25% 20%;
-    --sidebar-ring: 200 90% 50%;
+    --sidebar-background: 200 22% 9%;
+    --sidebar-foreground: 200 15% 92%;
+    --sidebar-primary: 192 75% 45%;
+    --sidebar-primary-foreground: 200 25% 7%;
+    --sidebar-accent: 200 22% 14%;
+    --sidebar-accent-foreground: 200 15% 92%;
+    --sidebar-border: 200 22% 18%;
+    --sidebar-ring: 192 75% 45%;
   }
 }
 
@@ -130,5 +125,10 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
