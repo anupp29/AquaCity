@@ -7,17 +7,12 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Droplets } from 'lucide-react';
 
 const getFriendlyAuthError = (error: unknown) => {
   if (error instanceof Error && error.message === 'Failed to fetch') {
-    return 'Authentication is temporarily unreachable. You can still explore the public SDG 6 dashboard and try signing in again in a moment.';
+    return 'Authentication is temporarily unreachable. You can still explore the public dashboard and try signing in again shortly.';
   }
-
-  if (error instanceof Error) {
-    return error.message;
-  }
-
+  if (error instanceof Error) return error.message;
   return 'Something went wrong. Please try again.';
 };
 
@@ -28,82 +23,51 @@ const Auth = () => {
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const formData = new FormData(e.currentTarget);
       const email = formData.get('email') as string;
       const password = formData.get('password') as string;
       const fullName = formData.get('fullName') as string;
-
-      if (!email || !password) {
-        toast.error('Please fill in all fields');
-        return;
-      }
-
+      if (!email || !password) { toast.error('Please fill in all fields'); return; }
       const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-          },
-          emailRedirectTo: `${window.location.origin}/`,
-        },
+        email, password,
+        options: { data: { full_name: fullName }, emailRedirectTo: `${window.location.origin}/` },
       });
-
       if (error) throw error;
-
       toast.success('Account created. Please confirm your email before signing in.');
     } catch (error) {
       toast.error(getFriendlyAuthError(error));
-      console.error('Sign up error:', error);
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const formData = new FormData(e.currentTarget);
       const email = formData.get('email') as string;
       const password = formData.get('password') as string;
-
-      if (!email || !password) {
-        toast.error('Please fill in all fields');
-        return;
-      }
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      if (!email || !password) { toast.error('Please fill in all fields'); return; }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-
       toast.success('Signed in successfully!');
       navigate('/add');
     } catch (error) {
       toast.error(getFriendlyAuthError(error));
-      console.error('Sign in error:', error);
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-accent/10 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-mist p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Droplets className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold">SDG 6 Water Watch</h1>
+          <div className="flex items-center justify-center gap-2.5 mb-2">
+            <img src="/logo.svg" alt="AquaCity" className="h-10 w-10" />
+            <h1 className="text-2xl font-extrabold tracking-tight">AquaCity</h1>
           </div>
-          <CardTitle className="text-2xl">Clean Water Monitoring</CardTitle>
+          <CardTitle className="text-xl">Urban Water Monitoring</CardTitle>
           <CardDescription>
-            Browse public water data or sign in to submit and manage monitoring records.
+            Sign in to submit water quality records or explore the public SDG 11 dashboard.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -112,66 +76,34 @@ const Auth = () => {
               <TabsTrigger value="signin">Sign In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
-            
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="signin-email">Email</Label>
-                  <Input
-                    id="signin-email"
-                    name="email"
-                    type="email"
-                    placeholder="name@example.com"
-                    required
-                  />
+                  <Input id="signin-email" name="email" type="email" placeholder="name@example.com" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signin-password">Password</Label>
-                  <Input
-                    id="signin-password"
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                  />
+                  <Input id="signin-password" name="password" type="password" placeholder="••••••••" required />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? 'Signing in...' : 'Sign In'}
                 </Button>
               </form>
             </TabsContent>
-            
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="signup-name">Full Name</Label>
-                  <Input
-                    id="signup-name"
-                    name="fullName"
-                    type="text"
-                    placeholder="John Doe"
-                  />
+                  <Input id="signup-name" name="fullName" type="text" placeholder="Your name" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signup-email">Email</Label>
-                  <Input
-                    id="signup-email"
-                    name="email"
-                    type="email"
-                    placeholder="name@example.com"
-                    required
-                  />
+                  <Input id="signup-email" name="email" type="email" placeholder="name@example.com" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signup-password">Password</Label>
-                  <Input
-                    id="signup-password"
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                    minLength={6}
-                  />
+                  <Input id="signup-password" name="password" type="password" placeholder="••••••••" required minLength={6} />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? 'Creating account...' : 'Create Account'}
