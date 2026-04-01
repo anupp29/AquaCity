@@ -14,7 +14,89 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      water_bodies: {
+        Row: {
+          capacity: number | null
+          created_at: string | null
+          current_level: number | null
+          health_score: number
+          health_status: string
+          id: string
+          images: string[] | null
+          location: Json
+          measurements: Json
+          name: string
+          notes: string | null
+          type: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          capacity?: number | null
+          created_at?: string | null
+          current_level?: number | null
+          health_score: number
+          health_status: string
+          id?: string
+          images?: string[] | null
+          location: Json
+          measurements: Json
+          name: string
+          notes?: string | null
+          type: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          capacity?: number | null
+          created_at?: string | null
+          current_level?: number | null
+          health_score?: number
+          health_status?: string
+          id?: string
+          images?: string[] | null
+          location?: Json
+          measurements?: Json
+          name?: string
+          notes?: string | null
+          type?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "water_bodies_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
