@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, List, Plus, BarChart3, Menu, LogOut, Building2, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, List, Plus, BarChart3, Menu, LogOut, Building2, ExternalLink, BookOpen } from 'lucide-react';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { useWaterBodies } from '@/contexts/WaterBodyContext';
@@ -14,6 +14,7 @@ const navigation = [
   { name: 'Water Bodies', href: '/list', icon: List },
   { name: 'Add Record', href: '/add', icon: Plus },
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
+  { name: 'Methodology', href: '/methodology', icon: BookOpen },
 ];
 
 export const Layout = ({ children }: LayoutProps) => {
