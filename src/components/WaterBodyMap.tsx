@@ -1,19 +1,5 @@
-import { useEffect, useRef } from 'react';
-import L, { Map as LeafletMap, LayerGroup } from 'leaflet';
+import { useMemo } from 'react';
 import { WaterBody } from '@/types/waterBody';
-import 'leaflet/dist/leaflet.css';
-
-// Fix for default marker icons in Leaflet when bundling
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
-L.Marker.prototype.options.icon = DefaultIcon;
 
 interface WaterBodyMapProps {
   waterBodies: WaterBody[];
@@ -30,12 +16,7 @@ export function WaterBodyMap({
   onMarkerClick,
   height = '500px',
   center = [19.7515, 75.7139], // Maharashtra center
-  zoom = 7,
 }: WaterBodyMapProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<LeafletMap | null>(null);
-  const markersLayerRef = useRef<LayerGroup | null>(null);
-
   const getMarkerColor = (status: string) => {
     switch (status) {
       case 'excellent':
@@ -53,101 +34,99 @@ export function WaterBodyMap({
     }
   };
 
-  const createColoredIcon = (color: string) =>
-    L.divIcon({
-      className: 'custom-marker',
-      html: `<div style="
-        background-color: ${color};
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        border: 3px solid white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      "></div>`,
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [0, -12],
+  const plotPoints = useMemo(() => {
+    const minLat = 15.5;
+    const maxLat = 22.5;
+    const minLng = 72.5;
+    const maxLng = 80.5;
+
+    return waterBodies.map((wb) => {
+      const x = ((wb.location.longitude - minLng) / (maxLng - minLng)) * 100;
+      const y = 100 - ((wb.location.latitude - minLat) / (maxLat - minLat)) * 100;
+
+      return {
+        ...wb,
+        x: Math.max(2, Math.min(98, x)),
+        y: Math.max(2, Math.min(98, y)),
+      };
     });
-
-  // Initialize map once
-  useEffect(() => {
-    if (containerRef.current && !mapRef.current) {
-      const map = L.map(containerRef.current, {
-        center,
-        zoom,
-        scrollWheelZoom: true,
-      });
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(map);
-
-      const markers = L.layerGroup();
-      markers.addTo(map);
-
-      mapRef.current = map;
-      markersLayerRef.current = markers;
-    }
-
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-        markersLayerRef.current = null;
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Update view when center/zoom change
-  useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.setView(center, zoom);
-    }
-  }, [center, zoom]);
-
-  // Update markers when data changes
-  useEffect(() => {
-    const map = mapRef.current;
-    const layer = markersLayerRef.current;
-    if (!map || !layer) return;
-
-    layer.clearLayers();
-
-    waterBodies.forEach((wb) => {
-      const marker = L.marker([wb.location.latitude, wb.location.longitude], {
-        icon: createColoredIcon(getMarkerColor(wb.healthStatus)),
-      });
-
-      marker.on('click', () => onMarkerClick?.(wb.id));
-
-      const popupHtml = `
-        <div style="padding: 8px;">
-          <h3 style="font-weight:600; margin:0 0 4px;">${wb.name}</h3>
-          <p style="margin:0 0 4px; text-transform:capitalize; color:#6b7280;">${wb.type}</p>
-          <p style="margin:0 0 2px;">
-            <span style="font-weight:500;">Health: </span>
-            <span style="font-weight:600; color:${getMarkerColor(wb.healthStatus)}; text-transform:capitalize;">${wb.healthStatus}</span>
-          </p>
-          <p style="margin:0 0 6px;"><span style="font-weight:500;">Score: </span>${wb.healthScore}/100</p>
-          <p style="margin:0; font-size:12px; color:#6b7280;">${wb.location.village}, ${wb.location.taluka}</p>
-        </div>`;
-
-      marker.bindPopup(popupHtml);
-      marker.addTo(layer);
-
-      if (selectedId && wb.id === selectedId) {
-        map.setView([wb.location.latitude, wb.location.longitude], Math.max(10, zoom));
-      }
-    });
-  }, [waterBodies, selectedId, zoom, onMarkerClick]);
+  }, [waterBodies]);
 
   return (
-    <div
-      ref={containerRef}
-      style={{ height, width: '100%', borderRadius: '8px', overflow: 'hidden' }}
-    />
+    <div style={{ display: 'grid', gap: '12px' }}>
+      <div
+        style={{
+          position: 'relative',
+          height,
+          width: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          background:
+            'radial-gradient(circle at 20% 30%, rgba(6,182,212,0.18), transparent 35%), radial-gradient(circle at 80% 70%, rgba(34,197,94,0.2), transparent 30%), linear-gradient(135deg, #f8fafc, #e2e8f0)',
+          border: '1px solid #cbd5e1',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: '8px',
+            left: '8px',
+            padding: '4px 8px',
+            borderRadius: '999px',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: '#0f172a',
+            background: 'rgba(255,255,255,0.85)',
+            border: '1px solid #cbd5e1',
+          }}
+        >
+          Approximate Maharashtra distribution
+        </div>
+
+        {plotPoints.map((wb) => {
+          const isSelected = selectedId === wb.id;
+
+          return (
+            <button
+              key={wb.id}
+              type="button"
+              onClick={() => onMarkerClick?.(wb.id)}
+              title={`${wb.name} (${wb.healthScore}/100)`}
+              style={{
+                position: 'absolute',
+                left: `${wb.x}%`,
+                top: `${wb.y}%`,
+                transform: 'translate(-50%, -50%)',
+                width: isSelected ? '18px' : '14px',
+                height: isSelected ? '18px' : '14px',
+                borderRadius: '50%',
+                border: '2px solid white',
+                boxShadow: isSelected
+                  ? '0 0 0 4px rgba(15, 23, 42, 0.18)'
+                  : '0 2px 4px rgba(0,0,0,0.25)',
+                backgroundColor: getMarkerColor(wb.healthStatus),
+                cursor: 'pointer',
+              }}
+            />
+          );
+        })}
+
+        <div
+          style={{
+            position: 'absolute',
+            right: '10px',
+            bottom: '8px',
+            fontSize: '11px',
+            color: '#475569',
+            background: 'rgba(255,255,255,0.8)',
+            padding: '2px 6px',
+            borderRadius: '6px',
+          }}
+        >
+          Center: {center[0].toFixed(2)}, {center[1].toFixed(2)}
+        </div>
+      </div>
+    </div>
   );
 }
 
