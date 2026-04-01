@@ -10,6 +10,7 @@ import WaterBodyList from "./pages/WaterBodyList";
 import WaterBodyDetail from "./pages/WaterBodyDetail";
 import AddWaterBody from "./pages/AddWaterBody";
 import Analytics from "./pages/Analytics";
+import Methodology from "./pages/Methodology";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/water-body/:id" element={<WaterBodyDetail />} />
             <Route path="/add" element={<ProtectedRoute><AddWaterBody /></ProtectedRoute>} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/methodology" element={<Methodology />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
